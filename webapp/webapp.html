@@ -1,0 +1,35 @@
+<html>
+<head>
+	<script type="text/javascript" src="../gigger-build/require.js"></script>
+	<script type="text/javascript">
+		require.config({
+			baseUrl: "../scripts",
+			paths: {
+					"faye": "http://faye.node.vm:8000/faye"
+				}
+			});
+		require(["developerlib"], function(developerlib) {
+			console.log("developerlib ready", developerlib);
+			
+			// save globally
+			gigger = new developerlib.Gigger("http://faye.node.vm:8000/faye");
+		});
+	</script>
+</head>
+<body>
+	<h1 id="title_id" class="foo">WEBAPP</h1>
+	<form><input type="button" id="button_1" name="Button" value="foo"></form>
+	
+	<script>
+		var foo = function() {
+			console.log('I am funny and will trigger an event on the catchall channel');
+			gigger.triggerEvent('/catchall', {event: 'onclick', element: 'button2'});
+		}
+	</script>
+	<form><input type="button" id="button2" name="JSButton" value="JSButton" onclick=foo()></form>
+	
+	<a href='#foo'>fooooo</a><br>
+	<a href='http://www.google.de'>gooogoool</a>
+
+</body>
+</html>
